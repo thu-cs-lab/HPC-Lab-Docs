@@ -8,7 +8,7 @@ theme:
   language: 'zh'
   custom_dir: 'theme-override/'
   icon:
-    logo: material/linear_scale
+    logo: material/memory
     repo: fontawesome/brands/github
   features:
     - navigation.tabs
