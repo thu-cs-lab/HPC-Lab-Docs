@@ -1,0 +1,5 @@
+from: markdown+grid_tables+table_captions
+verbosity: WARNING
+
+standalone: true
+table-of-contents: true

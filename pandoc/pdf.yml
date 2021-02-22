@@ -1,0 +1,64 @@
+from: markdown+grid_tables+table_captions
+verbosity: WARNING
+
+variables:
+  documentclass: ctexart
+  classoption:
+    - fontset=ubuntu
+  geometry:
+    - a4paper
+    - top=2.54cm
+    - bottom=2.54cm
+    - left=3.18cm
+    - right=3.18cm
+  indent: yes
+  numbersections: yes
+  title: 计算机网络原理实验指导书
+  author: 计算机网络原理实验教学团队
+  date: '\today'
+  header-includes: |
+    \usepackage{enumitem}
+    \setlistdepth{9}
+    \newlist{deepenum}{enumerate}{9}
+    \setlist[deepenum,1]{label=(\arabic*)}
+    \setlist[deepenum,2]{label=(\Roman*)}
+    \setlist[deepenum,3]{label=(\Alph*)}
+    \setlist[deepenum,4]{label=(\roman*)}
+    \setlist[deepenum,5]{label=(\alph*)}
+    \setlist[deepenum,6]{label=(\arabic*)}
+    \setlist[deepenum,7]{label=(\Roman*)}
+    \setlist[deepenum,8]{label=(\Alph*)}
+    \setlist[deepenum,9]{label=(\roman*)}
+    \renewenvironment{enumerate}{\begin{deepenum}}{\end{deepenum}}
+
+    \definecolor{codegreen}{rgb}{0,0.6,0}
+    \definecolor{codegray}{rgb}{0.5,0.5,0.5}
+    \definecolor{codepurple}{rgb}{0.58,0,0.82}
+
+    \lstset{
+      commentstyle=\color{codegreen},
+      keywordstyle=\color{magenta},
+      numberstyle=\tiny\color{codegray},
+      stringstyle=\color{codepurple},
+      basicstyle=\ttfamily,
+      prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+      columns=fullflexible,
+      keepspaces=true,
+      showspaces=false,
+      showtabs=false,
+      breaklines=true,
+      showstringspaces=false,
+      breakatwhitespace=true,
+      frame=single,
+      framesep=3pt,
+      xleftmargin=12pt,
+      tabsize=4,
+      captionpos=b,
+      numbers=left
+    }
+
+pdf-engine: xelatex
+standalone: true
+table-of-contents: true
+listings: true
+

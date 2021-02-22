@@ -1,0 +1,64 @@
+site_name: 高性能计算导论实验文档
+site_description: 'Documentation for Labs of Introduction to High Performance Computing'
+site_author: 'HPC Lab Developers'
+copyright: 'Copyright &copy; 2019-2021 Department of Computer Science and Technology, Tsinghua University. All Rights Reserved.'
+
+theme: 
+  name: 'material'
+  language: 'zh'
+  custom_dir: 'theme-override/'
+  icon:
+    logo: material/linear_scale
+    repo: fontawesome/brands/github
+  features:
+    - navigation.tabs
+    - navigation.instant
+
+repo_name: 'thu-cs-lab/HPC-Lab-Docs'
+repo_url: 'https://github.com/thu-cs-lab/HPC-Lab-Docs'
+
+extra:
+  pagetime: 'on'
+
+nav:
+  - 总述: index.md
+  # - FAQ: faq.md
+
+extra_javascript:
+  - 'https://cdn.jsdelivr.net/npm/mathjax@2.7.0/MathJax.js?config=TeX-MML-AM_CHTML'
+
+plugins:
+  - search
+  - git-revision-date-localized:
+      fallback_to_build_date: true
+  - git-authors:
+      show_contribution: true
+      show_line_count: true
+
+markdown_extensions:
+  - admonition
+  - codehilite:
+      guess_lang: false
+      linenums: true
+  - footnotes
+  - def_list
+  - meta
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_generator: !!python/name:pymdownx.emoji.to_svg
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
