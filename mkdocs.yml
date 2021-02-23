@@ -11,8 +11,8 @@ theme:
     logo: material/memory
     repo: fontawesome/brands/github
   features:
-    - navigation.tabs
-    - navigation.instant
+    # - navigation.tabs
+    # - navigation.instant
 
 repo_name: 'thu-cs-lab/HPC-Lab-Docs'
 repo_url: 'https://github.com/thu-cs-lab/HPC-Lab-Docs'
@@ -22,6 +22,14 @@ extra:
 
 nav:
   - 总述: index.md
+  - 集群使用: cluster.md
+  - 实验说明:
+    - 实验零: exp/0.aplusb.md
+    - 实验一: exp/1.odd_even_sort.md
+    - 实验二: exp/2.bfs.md
+    - 实验三: exp/3.mssp.md
+    - 附加实验: exp/4.spmm.md
+  - 参考资料: reference.md
   # - FAQ: faq.md
 
 extra_javascript:
