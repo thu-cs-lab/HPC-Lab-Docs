@@ -1,7 +1,7 @@
 site_name: 高性能计算导论实验文档
 site_description: 'Documentation for Labs of Introduction to High Performance Computing'
 site_author: 'HPC Lab Developers'
-copyright: 'Copyright &copy; 2019-2021 Department of Computer Science and Technology, Tsinghua University. All Rights Reserved.'
+copyright: 'Copyright &copy; 2021 Department of Computer Science and Technology, Tsinghua University. All Rights Reserved.'
 
 theme: 
   name: 'material'
