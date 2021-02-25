@@ -19,7 +19,7 @@ GCC 内置于系统中可以直接使用，常用编译选项：
 使用 ICC 前需要先加载（见集群使用说明），其常用编译选项与 GCC 基本一致，不同的包括：
 
 * `-xHost` 替代了 `-march=native`
-* `-qopenmp` 代替了 `-mopenmp`
+* `-qopenmp` 代替了 `-fopenmp`
 
 ### OpenMPI / Intel MPI
 
