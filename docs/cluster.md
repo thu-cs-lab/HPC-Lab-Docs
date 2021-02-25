@@ -82,7 +82,7 @@ source /opt/intel/oneapi/vtune/latest/vtune-vars.sh # 仅加载 vTune
 source /opt/intel/oneapi/advisor/latest/env/vars.sh # 仅加载 advisor
 ```
 
-关于具体工具的使用，可以参见 [工具说明](/tools/) 部分。
+关于这些工具的使用方法，可以参见 [工具概述](/tools/) 部分。
 
 ## SLURM 使用
 
