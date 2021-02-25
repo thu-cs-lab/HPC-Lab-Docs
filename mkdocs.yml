@@ -23,7 +23,7 @@ extra:
 nav:
   - 总述: index.md
   - 集群使用: cluster.md
-  - 工具链说明: toolchain.md
+  - 工具说明: tools.md
   - 实验说明:
     - 实验零: exp/0.aplusb.md
     # - 实验一: exp/1.odd_even_sort.md
