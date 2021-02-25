@@ -50,13 +50,64 @@
     
     默认情况下，所有学生账号属于同一个组（`hpc-lab`），但 home 目录仅允许自己访问（默认权限为 `700`）。**严格禁止** 更改自己 home 目录的权限，以防其他人访问你的 home 目录。如果发现故意的此类行为，视同分享账号处理。
 
-集群上安装了 VIM、Emacs、nano 等文本编辑器，你可以自由选取使用。对于不熟悉终端编辑器的同学，推荐使用 VSCode Remote SSH 的方式进行连接和编辑。当然，也可以在本地编写代码并推送到集群上测试，推荐使用 Git 来进行文件的同步和追踪，或者使用 `rsync` 只进行同步。本文档中不会详细介绍任何编辑工具，请同学们自行查阅学习或者询问助教。
+集群上安装了 VIM、Emacs、nano 等文本编辑器，你可以自由选取使用。对于不熟悉终端编辑器的同学，推荐使用 VSCode Remote SSH 的方式进行连接和编辑。当然，也可以在本地编写代码并推送到集群上测试，推荐使用 Git 来进行文件的同步和追踪，或者使用 `rsync` 只进行同步。此外，为了防止由于网络原因造成的进度丢失、程序终止等问题，推荐在登录 SSH 后使用 `screen` 或 `tmux` 来进行终端复用。本文档中不会详细介绍这些工具，建议同学们自行查阅学习，或者亦可询问助教。
 
 为了防止误操作，集群的 home 使用 ZFS 配置了自动的快照备份。每个用户的 home 都是单独的 ZFS dataset，可以通过访问 `~/.zfs/snapshot/` 下各个文件夹的方式获取快照时间点时存在的的文件，文件夹名称即为快照时间。如果需要，也可以请求助教直接将整个 home 回滚到某个当前存在的快照对应的时间点。注意快照是 **只读的** ，并且在一段时间后会自动删除。请 **自行备份** 重要的文件，对于任何误操作导致的后果，包括且不限于作业丢失无法找回等，助教概不负责。
 
 ## 工具链与环境加载
 
+集群的系统中预装了 GCC 8.3.0、GNU make、CMake 等常用的编译工具。所需的其他工具叙述如下：
+
+### Spack
+
+集群使用 [Spack](https://spack.io/) 管理软件包，安装在 `/home/spack/spack` 下。用户登录后，在 shell 中输入 `spack` 即可自动加载。如果需要在脚本中加载，可以使用 `source /home/spack/spack/share/spack/setup-env.sh` 语句。
+
+使用 `spack find` 可以列出所有已经安装的软件，集群中预装了下列软件可供加载：
+
+* `cuda@11.1.0`
+* `openmpi@4.0.5`
+
+使用 `spack load/unload xxx` 即可从当前环境中加载/移除相应的软件包，如 `spack load cuda` 后即可使用 NVCC 编译器，`spack unload openmpi` 可移除 OpenMPI。注意使用 Spack 中的软件编译得到的文件，在运行时一般也需要加载对应的软件，否则可能会出现找不到库（`.so` 文件）的错误。用户无权安装或移除 Spack 中的软件，如有特殊需要，请与助教联系。
+
+### Intel 工具链
+
+集群中还安装了全套的 Intel OneAPI 2021，包含 Intel MPI、MKL、ICC、vTune、Advisor 等组件。这些组件的安装目录在 `/opt/intel/oneapi` 下，可以通过其附带的脚本来加载环境，如：
+
+```bash
+source /opt/intel/oneapi/setvars.sh # 加载全部环境，或
+source /opt/intel/oneapi/compiler/latest/env/vars.sh # 仅加载 ICC 编译器
+source /opt/intel/oneapi/mpi/latest/env/vars.sh # 仅加载 Intel MPI
+source /opt/intel/oneapi/mkl/latest/env/vars.sh # 仅加载 MKL
+source /opt/intel/oneapi/vtune/latest/vtune-vars.sh # 仅加载 vTune
+source /opt/intel/oneapi/advisor/latest/env/vars.sh # 仅加载 advisor
+```
+
+关于具体工具的使用，可以参见 [工具链使用](/toolchain/) 部分。
+
 ## SLURM 使用
+
+集群使用 [SLURM](https://slurm.schedmd.com/) 来管理作业提交。
+
+!!! success "必须使用 SLURM"
+
+    任何任务都应该使用 SLURM 进行提交，**登录节点（`conv0`）仅可进行编译和调试，禁止运行任务。**
+    集群包含自动的监控脚本，如果检测到某用户在登录节点上有较长时间高负载，将会 **强制杀死** 其所有进程。
+
+常用的 SLURM 命令包括 `sinfo`, `squeue`, `srun`, `sbatch` 和 `sacct`。
+
+`sinfo`、`squeue` 和 `sacct` 用于状态查询。其中 `sinfo` 查询整个集群当前的状态，`squeue` 查询当前队列中正在运行和等待运行的任务（以及它们的所有者、任务名等）、`sacct` 可以查看属于自己的所有历史任务统计。这些命令的用法可以查询相应的文档。
+
+`srun` 用于运行单个程序，常见用法如：
+
+```bash
+srun -N 4 -n 8 --cpu-bind sockets ./test --args
+```
+
+上述命令表示在 4 节点上运行 8 个进程（每机 2 进程），并将每个进程绑定到一个 CPU socket（即一个 NUMA 节点）。通常来说，只需要关注 `-N` 和 `-n` 选项，用来控制进程数量。由于 SLURM 支持自动的进程绑定，因此大多数时候不需要指定 `--cpu-bind` 参数也能正确地工作。为了防止不同同学的进程互相干扰，实验集群的 SLURM 被配置为独占模式，即每个任务的**最小分配粒度**为单个节点。
+
+`sbatch` 用于提交脚本，适用于时间较长的或多个任务的提交。本文档中不详细介绍这一命令的用法，有需要的同学可以查看 [此教程](http://hpc.pku.edu.cn/_book/guide/slurm/sbatch.html)。使用 `sbatch` 提交的任务可以用 `scancel` 命令进行取消。
+
+由于 `salloc` 经常引发资源占用问题，实验集群上 **不允许** 使用此命令。
 
 ## 资源限制
 
