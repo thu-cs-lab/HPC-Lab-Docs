@@ -6,9 +6,9 @@
 
 完成该实验需要一定的 Make、SSH、Shell 和 Linux 的使用知识。同时，我们还推荐使用 Git 进行版本控制。如果你是大三或之后选的课程，那么你应该已经在《软件工程》《编译原理》《程序设计训练》等课程中学到了相应的知识。如果你是大一大二选的课程，可以参考以下的教程进行预习：
 
-* Git: [简明指南](https://rogerdudler.github.io/git-guide/index.zh.html) [Git教程](https://www.liaoxuefeng.com/wiki/896043488029600) [缺失的一课](https://missing-semester-cn.github.io/2020/version-control/) [助教编写的 Git 速查文档](https://circuitcoder.github.io/Orange-ECC/ecc/git/) [Git Cheetsheet](https://education.github.com/git-cheat-sheet-education.pdf)
+* Git: [简明指南](https://rogerdudler.github.io/git-guide/index.zh.html)、[Git教程](https://www.liaoxuefeng.com/wiki/896043488029600) [缺失的一课](https://missing-semester-cn.github.io/2020/version-control/)、[助教编写的 Git 速查文档](https://circuitcoder.github.io/Orange-ECC/ecc/git/)、[Git Cheetsheet](https://education.github.com/git-cheat-sheet-education.pdf)
 * Make: 见[网原实验相关文档]([/router/doc/howto/make/](https://lab.cs.tsinghua.edu.cn/router/doc/howto/make/))
-* Shell: [缺失的一课](https://missing-semester-cn.github.io/2020/command-line/) [Command Line Cheetsheet](https://threenine.co.uk/download/1846/)
+* Shell: [缺失的一课](https://missing-semester-cn.github.io/2020/command-line/)、[Command Line Cheetsheet](https://threenine.co.uk/download/1846/)
 * Linux: [USTC LUG Linux 101 在线讲义](https://101.lug.ustc.edu.cn/)
 
 其中特别推荐 [计算机教育中缺失的一课](https://missing-semester-cn.github.io/)，其中包含了大量有用的内容。
@@ -82,7 +82,7 @@ source /opt/intel/oneapi/vtune/latest/vtune-vars.sh # 仅加载 vTune
 source /opt/intel/oneapi/advisor/latest/env/vars.sh # 仅加载 advisor
 ```
 
-关于这些工具的使用方法，可以参见 [工具概述](/tools/) 部分。
+关于这些工具的使用方法，可以参见 [工具概述](tools.md) 部分。
 
 ## SLURM 使用
 
