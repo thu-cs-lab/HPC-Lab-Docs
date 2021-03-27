@@ -17,7 +17,7 @@
 
 集群由五台 Dell PowerEdge R730 服务器构成，主机名为 `conv[0-4]`，硬件配置为：
 
-* CPU: 2 $\times$ Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz (14C28T)
+* CPU: 2 $\times$ Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz (14 Cores, turbo off)
 * Memory: 16 $\times$ 16 GB DDR4-2400
 * Network: 1000 Mbps Ethernet + 100 Gbps Infiniband EDR
 * GPU: 1 $\times$ NVIDIA GeForce GTX 1080 (`conv0`) / 1 $\times$ NVIDIA Tesla P100 (`conv[1-4]`)
