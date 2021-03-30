@@ -28,7 +28,7 @@ nav:
     - 实验零: exp/0.pow_a.md
     - 实验一: exp/1.odd_even_sort.md
     - 实验二: exp/2.bfs.md
-    # - 实验三: exp/3.mssp.md
+    - 实验三: exp/3.mssp.md
     # - 附加实验: exp/4.spmm.md
   - 参考资料: reference.md
   # - FAQ: faq.md
