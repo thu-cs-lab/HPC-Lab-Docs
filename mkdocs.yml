@@ -42,10 +42,10 @@ plugins:
   - git-revision-date-localized:
       fallback_to_build_date: true
   - git-authors:
-        show_contribution: true
-        show_line_count: true
-        count_empty_lines: true
-        fallback_to_empty: false
+      show_contribution: true
+      show_line_count: true
+      count_empty_lines: true
+      fallback_to_empty: false
 
 markdown_extensions:
   - admonition
