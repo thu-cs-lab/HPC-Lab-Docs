@@ -41,6 +41,7 @@ plugins:
   - search
   - git-revision-date-localized:
       fallback_to_build_date: true
+      locale: zh
   - git-authors:
       show_contribution: true
       show_line_count: true
