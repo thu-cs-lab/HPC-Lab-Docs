@@ -30,6 +30,7 @@
 
 * [小作业零](assignments/0.pow_a.md)：熟悉环境配置、集群使用、作业提交
 * [小作业一](assignments/1.mpi_async.md)：MPI 非阻塞编程
+* [小作业二](assignments/2.mpi_allreduce.md)：MPI Allreduce
 
 ### 大作业
 
