@@ -28,6 +28,7 @@ nav:
       - 小作业零: assignments/0.pow_a.md
       - 小作业一: assignments/1.mpi_async.md
       - 小作业二: assignments/2.mpi_allreduce.md
+      - 小作业三: assignments/3.omp_schedule.md
   # - 大作业:
   #   - 实验一: exp/1.odd_even_sort.md
   #   - 实验二: exp/2.bfs.md
