@@ -32,6 +32,8 @@
 * [小作业一](assignments/1.mpi_async.md)：MPI 非阻塞编程
 * [小作业二](assignments/2.mpi_allreduce.md)：MPI Allreduce
 * [小作业三](assignments/3.omp_schedule.md)：OpenMP 调度策略
+* [小作业四](assignments/4.simd.md)：OpenMP 调度策略
+* 
 
 ### 大作业
 

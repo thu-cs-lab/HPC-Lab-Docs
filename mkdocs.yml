@@ -30,10 +30,10 @@ nav:
       - 小作业二: assignments/2.mpi_allreduce.md
       - 小作业三: assignments/3.omp_schedule.md
       - 小作业四: assignments/4.simd.md
-      - 小作业五: assignments/5.tools.md
+      - 小作业五: assignments/5.profiling_tools.md
   - 大作业:
     - 实验一: exp/1.odd_even_sort.md
-  #   - 实验二: exp/2.bfs.md
+    - 实验二: exp/2.stencil.md
   #   - 实验三: exp/3.apsp.md
   #   - 附加实验: exp/4.spmm.md
   - 参考资料: reference.md
