@@ -18,9 +18,9 @@
 
 * 插槽（socket） / 封装（package）：指物理和机械上可分的 CPU。家用 PC 通常为单 socket，服务器通常可支持 2 socket（也常称为“双路”），也有 4 或者 8 socket。不同的 socket 之间通常通过高速总线连接，如 Intel 的 [QPI](https://www.intel.com/content/www/us/en/io/quickpath-technology/quickpath-technology-general.html)、AMD 的 [Infinity Fabric](https://www.amd.com/zh-hans/technologies/infinity-architecture)。
 * 核心（core）：指 CPU 上完整、可独立执行控制流的处理单元，也是操作系统调度进程的单位。目前常见的家用和服务器处理器均为多核处理器，如一块 [AMD EPYC 7763](https://www.amd.com/zh-hans/products/cpu/amd-epyc-7763) 处理器有 64 个 core，而一块 [Intel Xeon Platinum 8380](https://www.intel.com/content/www/us/en/products/sku/212287/intel-xeon-platinum-8380-processor-60m-cache-2-30-ghz/specifications.html) 有 40 个 core。
-* [超线程（hyper-threading，简写为 HT）](https://en.wikipedia.org/wiki/Hyper-threading)：将单个物理 CPU 核心虚拟为多个逻辑核心，以充分利用其中计算单元的技术。目前使用的处理器通常为每核心 2 超线程。通常所说 CPU 的“线程（thread）”数包含超线程（注意与操作系统中的软件“线程”区分），如 Intel Core i7-10700K 有 8 个核心、16 个线程，可记为 8C16T。
+* [超线程（hyper-threading，简写为 HT）](https://en.wikipedia.org/wiki/Hyper-threading)：将单个物理 CPU 核心虚拟为多个逻辑核心，以充分利用其中计算单元的技术。目前使用的处理器通常为每核心 2 超线程。通常所说 CPU 的“线程（thread）”或“硬件线程（hardware thread / hwt）”数包含超线程（注意与操作系统中的软件线程区分），如 Intel Core i7-10700K 有 8 个核心、16 个线程，可记为 8C16T。
 
-由于 “CPU” 一次可被用于指代任一级别的单元，我们不推荐单独使用此措辞，以免产生歧义。
+由于 “CPU” 一词可被用于指代任一级别的单元，我们不推荐单独使用此措辞，以免产生歧义。
 
 !!! note "超线程的利弊"
 
@@ -32,9 +32,9 @@
     课程使用的 `conv` 集群每个节点安装了双路 [Intel(R) Xeon(R) CPU E5-2680 v4](https://www.intel.cn/content/www/cn/zh/products/sku/199335/intel-core-i710700k-processor-16m-cache-up-to-5-10-ghz/specifications.html) 处理器，并且关闭了超线程。
     每个节点共有 2 socket $\times$ 14 core $\times$ 1 = 28 threads。
 
-### NUMA 架构
+### NUMA 架构与效应
 
-现代处理器也均使用 [NUMA 架构](https://en.wikipedia.org/wiki/Non-uniform_memory_access)，每个 socket 通过内存控制器连接本地内存（local memory），通过 socket 间的高速总线访问属于其他 socket 的远端内存（remote memory）。我们将直接连接的 CPU core 和内存和其他外设（如网卡、GPU）称为一个 NUMA domain（或 NUMA node），在同一个 domain 中（intra-domain）的访存性能通常显著高于跨 NUMA（inter-domain）的访存（包括带宽和延迟），这种现象被称为 NUMA 效应。
+现代处理器均采用 [NUMA 架构](https://en.wikipedia.org/wiki/Non-uniform_memory_access)，每个 socket 通过内存控制器连接本地内存（local memory），通过 socket 间的高速总线访问属于其他 socket 的远端内存（remote memory）。我们将直接连接的 CPU core 和内存和其他外设（如网卡、GPU）称为一个 NUMA domain（或 NUMA node），在同一个 domain 中（intra-domain）的访存性能（包括带宽和延迟）通常显著高于跨 NUMA（inter-domain）的性能，这种现象被称为 NUMA 效应。
 
 事实上，现代 CPU 的 NUMA domain 并不只到 socket 粒度，可以继续细分出不同级别。如 [AMD 文档](https://www.amd.com/system/files/2018-03/AMD-Optimizes-EPYC-Memory-With-NUMA.pdf) 的图 2 和 3 所示，EPYC 3 处理器使用的 Zen 3 架构中，每个 socket 由 4 个完全相连的 die 构成，每个 die 直接连接自己的 DDR 内存控制器。因此每个 socket 可以划分出 4 个子 NUMA domain，子 domain 内的访存也快于跨子 domain 的互访。更进一步地，由于每四个 core 共享一个缓存控制器（CCX），因此 CCX 可以作为更次一级的 NUMA domain 划分依据。在这样的 socket - die - CCX 三级划分下，双路 EPYC 7763 处理器系统的 128 个 core 可以划分成 32 个最细粒度的 CCX-level domain，8 个 die-level domain 和 2 个 socket-level domain。
 
@@ -205,7 +205,7 @@ SLURM 的进程绑定分为三级，具体可以查阅 [此文档](https://slurm
 
 ??? example "示例脚本"
 
-    如下的脚本把每个进程绑定到一个 NUMA domain 的连续几个核心上（对 OpenMP + MPI 混合情况很有用）：
+    如下的脚本把每个进程绑定到一个（采取上述交错编号的 NUMA domain 的连续几个核心上（对 OpenMP + MPI 混合情况很有用）：
 
     ```bash
     #!/bin/bash
@@ -218,28 +218,32 @@ SLURM 的进程绑定分为三级，具体可以查阅 [此文档](https://slurm
     LOCAL_SIZE=$MPI_LOCALNRANKS # for Intel MPI
     LOCAL_SIZE=$SLURM_TASKS_PER_NODE # for SLURM
 
-    NCPUS=$(nprocs) # eg: 28
+    NCPUS=$(nproc --all) # eg: 28
     NUM_NUMA=2
 
     # calculate binding parameters
     # bind to sequential cores in a NUMA domain
-    CORES_PER_PROCESS=$(($NCPUS / $LOCAL_SIZE)) # eg: 2 when LOCAL_SIZE=14
-    CORE_START=$(($LOCAL_RANK * $CORES_PER_PROCESS * $NUM_NUMA)) # eg: 8
-    CORE_END=$((($LOCAL_RANK + 1) * $CORES_PER_PROCESS * $NUM_NUMA - $NUM_NUMA)) # eg: 10
-    CORES=$(seq -s, $CORE_START $NUM_NUMA $CORE_END) # eg: 8,10
+    CORES_PER_PROCESS=$(($NCPUS / $LOCAL_SIZE)) # eg: 7 when LOCAL_SIZE=4
+    NUMA_ID=$(($LOCAL_RANK / $NUM_NUMA)) # eg: 0, 0, 1, 1
+    NUMA_OFFSET=$(($LOCAL_RANK % $NUM_NUMA)) # 0, 1, 0, 1
+    CORE_START=$(($NUMA_ID * $CORES_PER_PROCESS * $NUM_NUMA + $NUMA_OFFSET)) # eg: 0, 1, 14, 15
+    CORE_END=$((($NUMA_ID + 1) * $CORES_PER_PROCESS * $NUM_NUMA - $NUM_NUMA + $NUMA_OFFSET)) # eg: 12, 13, 26, 27
+    CORES=$(seq -s, $CORE_START $NUM_NUMA $CORE_END) # eg: 0,2,4,6,8,10,12 for rank 0
 
     # execute command with specific cores
     echo "Process $LOCAL_RANK on $(hostname) bound to core $CORES"
     exec numactl -C "$CORES" $@
     ```
 
-使用 wrapper script 运行时，需要禁用 MPI 或者 SLURM 的进程绑定功能，避免互相干扰，如 `mpirun --bind-to-none` 或者 `srun --cpu-bind=none`。
+使用 wrapper script 运行时，需要禁用 MPI 或者 SLURM 的进程绑定功能（如 `mpirun --bind-to-none` 或者 `srun --cpu-bind=none`），避免互相干扰，原本的运行命令直接作为 wrapper script 的参数传入即可，如：`srun -n 4 -N 1 --cpu-bind=none ./wrapper.sh ./exe --foo --bar`。
 
 !!! warning "注意映射"
 
     编写 wrapper script 时，一定需要注意 CPU 核心编号与 NUMA domain 的对应关系（以及与进程逻辑的配合），错误绑定会带来 **严重的性能下降** 。
 
 ### OpenMP 程序
+
+由于 OpenMP 的所有线程共享地址空间，因此容易受到 NUMA 效应的影响。尤其是在线程数超过单个 NUMA domain 的核心数时，访存密集的负载有可能产生性能下降。因此，线程数并非越多越好，编写程序时也需要考虑到此影响。
 
 OpenMP 进程使用以下的方式控制线程的绑定：
 
@@ -248,14 +252,12 @@ OpenMP 进程使用以下的方式控制线程的绑定：
 
 举例如下：
 
-* `OMP_NUM_THREADS=28 OMP_PROC_BIND=true OMP_PLACES=cores`：每个线程绑定到一个 core，使用默认的分布（线程 `n` 绑定到 core `n`）
-* `OMP_NUM_THREADS=4 OMP_PROC_BIND=close OMP_PLACES=sockets`：每个线程绑定到一个 socket，并且相邻线程尽量绑定到相同 socket（线程 0、1 绑定到 socket 0，2、3 绑定到 socket 1）
-
-由于 OpenMP 的所有线程共享地址空间，因此容易受到 NUMA 效应的影响。尤其是在线程数超过单个 NUMA domain 的核心数时，访存密集的负载（有可能产生性能下降。因此，线程数并非越多越好，编写程序时也需要考虑到此影响。
+* `OMP_NUM_THREADS=28 OMP_PROC_BIND=true OMP_PLACES=cores`：每个线程绑定到一个 core，使用默认的分布（线程 `n` 绑定到 core `n`）；
+* `OMP_NUM_THREADS=4 OMP_PROC_BIND=close OMP_PLACES=sockets`：每个线程绑定到一个 socket，并且相邻线程尽量绑定到相同 socket（线程 0、1 绑定到 socket 0，2、3 绑定到 socket 1）。
 
 ### MPI + OpenMP 混合程序
 
-在使用 MPI + OpenMP 混合编程时，进程绑定对性能的影响尤为关键。每个 MPI 进程需要绑定在一组核心上（通常是一个 NUMA domain），并把它的 OpenMP 线程绑定在其中的每个核心上。如在 `conv` 集群上，使用 2 进程 $\times$ 进程 14 线程的正确绑定方式为：
+在使用 MPI + OpenMP 混合编程时，进程绑定对性能的影响尤为关键。每个 MPI 进程需要绑定在一组核心上（通常是一个 NUMA domain），并把它的 OpenMP 线程绑定在其中的每个核心上。如在 `conv` 集群上，使用 2 进程 $\times$ 14 线程的正确绑定方式为：
 
 ```bash
 OMP_NUM_THREADS=14 OMP_PROC_BIND=true OMP_PLACES=cores srun -n 2 -N 1 --cpu-bind=sockets ./exe
@@ -271,7 +273,7 @@ OpenMP 线程只能绑定于其“可见”的核心上，也就是父进程被�
     OMP_NUM_THREADS=7 OMP_PROC_BIND=true OMP_PLACES=cores srun -n 4 -N 1 --cpu-bind=sockets ./exe
     ```
 
-    这是由于 MPI 进程的绑定粒度为 socket，0、1 号进程“可见”的核心均为 socket 0 的所有 14 个核心。所以它们都会把自己绑定在 socket 0 的前 7 个核心上（并因此产生严重资源竞争），而不是均分这 14 个核心。
+    这是由于 MPI 进程的绑定粒度为 socket，0、2 号进程“可见”的核心均为 socket 0 的所有 14 个核心。所以它们都会把自己绑定在 socket 0 的前 7 个核心上（并因此产生严重资源竞争），而不是均分这 14 个核心。1、3 号进程同样会竞争 socket 1 的前 7 个核心。
 
 !!! warning "谨慎控制数量"
 
@@ -281,11 +283,11 @@ OpenMP 线程只能绑定于其“可见”的核心上，也就是父进程被�
 
 除了上述几种在运行时指定的绑定方式外，程序可以主动调用系统接口或第三方库控制自己的 CPU 绑定，例如：
 
-* POSIX [`sched_setaffinity(2)`](https://man7.org/linux/man-pages/man2/sched_setaffinity.2.html) / [`pthread_getaffinity_np(3)`](https://linux.die.net/man/3/pthread_getaffinity_np) API
-* [`libnuma`](https://man7.org/linux/man-pages/man3/numa.3.html)：`numactl` 底层使用的库，
-* [`libhwloc`](https://www.open-mpi.org/projects/hwloc/)：OpenMPI 项目中衍生的可移植库
+* POSIX [`sched_setaffinity(2)`](https://man7.org/linux/man-pages/man2/sched_setaffinity.2.html) / [`pthread_getaffinity_np(3)`](https://linux.die.net/man/3/pthread_getaffinity_np) API；
+* [`libnuma`](https://man7.org/linux/man-pages/man3/numa.3.html)：`numactl` 底层使用的库；
+* [`libhwloc`](https://www.open-mpi.org/projects/hwloc/)：OpenMPI 项目中衍生的可移植库。
 
-在程序中直接控制绑定可以实现更丰富灵活的功能，也是某些情况下的唯一选择（如基于 `pthread` 的多线程程序）。但其更容易与外部的绑定行为产生冲突，因此需要谨慎使用。
+在程序中直接控制绑定可以实现更丰富灵活的功能，也是某些情况下的唯一选择（如基于 `pthread` 的多线程程序）。但这些方法更容易与外部的绑定行为产生冲突，因此需要谨慎使用。
 
 ## 调试工具
 
