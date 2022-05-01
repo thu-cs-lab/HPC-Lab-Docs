@@ -1,4 +1,4 @@
-# 进程绑定
+# 进程绑定 {#process-binding}
 
 ??? tip "TL; DR:"
 
@@ -10,9 +10,9 @@
 
 在复制和使用上面的命令前，请确保你已经阅读和理解了下面的所有内容。
 
-## 基础概念
+## 基础概念 {#basic-ideas}
 
-### 多核处理器系统
+### 多核处理器系统 {#multicore-system}
 
 现代多核处理器系统通常由多个层级构成：
 
@@ -32,7 +32,7 @@
     课程使用的 `conv` 集群每个节点安装了双路 [Intel(R) Xeon(R) CPU E5-2680 v4](https://www.intel.cn/content/www/cn/zh/products/sku/199335/intel-core-i710700k-processor-16m-cache-up-to-5-10-ghz/specifications.html) 处理器，并且关闭了超线程。
     每个节点共有 2 socket $\times$ 14 core $\times$ 1 = 28 threads。
 
-### NUMA 架构与效应
+### NUMA 架构与效应 {#numa-architecture-and-effect}
 
 现代处理器均采用 [NUMA 架构](https://en.wikipedia.org/wiki/Non-uniform_memory_access)，每个 socket 通过内存控制器连接本地内存（local memory），通过 socket 间的高速总线访问属于其他 socket 的远端内存（remote memory）。我们将直接连接的 CPU core 和内存和其他外设（如网卡、GPU）称为一个 NUMA domain（或 NUMA node），在同一个 domain 中（intra-domain）的访存性能（包括带宽和延迟）通常显著高于跨 NUMA（inter-domain）的性能，这种现象被称为 NUMA 效应。
 
@@ -149,17 +149,17 @@ NUMA domain 越细分，则 NUMA 效应越不明显。通常， **只需关注 s
 
     说明每个 socket 的 14 个 core 属于一个 NUMA domain，每个 domain 都安装了 128GB 内存。domain `L#0` 还安装了硬盘控制器、以太网卡等外设，`L#1` 则安装了 GPU 和 IB 卡。
 
-### 绑定的意义
+### 进程绑定的意义 {#importance-of-binding}
 
 当处理器中存在多个 CPU 核心时，操作系统的调度器会将进程在可用的核心间千亿，以试图维持负载均衡。在一个多 NUMA 系统中，如果进程被迁移到了与创建时不同的 NUMA domain，就可能影响性能（Linux 在 [NUMA 感知调度](https://lwn.net/Articles/568870/) 上进行了一些努力，但由于多种原因效果并不理想）。此外，进程迁移时必须暂停，在新的核心上也会不可避免地遇到 cache、分支预测器等组件的冷启动开销，产生性能波动。因此，在运行计算密集的程序时，通常需要将进程、线程与 CPU 核心进行绑定（binding / pinning），即控制进程与 CPU 核心的亲和性（affinity），消除上述的各类影响。
 
-## 绑定方法
+## 绑定方法 {#binding-approaches}
 
-### MPI 程序
+### MPI 程序 {#mpi-programs}
 
 MPI 程序由于进程间不共享内存，受 NUMA 效应的影响一般不显著。这意味着通常运行 MPI 程序时，可以占满所有物理核心而无需考虑 NUMA 效应带来的性能损失。当然，实际进程数也需要根据程序的可扩展性确定。
 
-#### MPI runner 绑定
+#### MPI runner 绑定 {#mpi-runner-binding}
 
 !!! note "课程集群不可用"
 
@@ -172,7 +172,7 @@ MPI 程序由于进程间不共享内存，受 NUMA 效应的影响一般不显�
 
 Intel MPI 则使用一系列 `I_MPI_PIN` 开头的环境变量进行控制，行为较为复杂，可见 [文档](https://www.intel.com/content/www/us/en/develop/documentation/mpi-developer-reference-linux/top/environment-variable-reference/process-pinning/environment-variables-for-process-pinning.html) 说明。
 
-#### SLURM 绑定
+#### SLURM 绑定 {#slurm-binding}
 
 SLURM 的进程绑定分为三级，具体可以查阅 [此文档](https://slurm.schedmd.com/mc_support.html)。使用 low-level 的 `--cpu-bind` 参数可以用于精确地控制绑定，SLURM 也可以根据参数组合进行自动的绑定。在 `conv` 集群上使用 `-n 28 -N 1` 时（占满 CPU 核心），绑定参数效果举例如下：
 
@@ -195,7 +195,7 @@ SLURM 的进程绑定分为三级，具体可以查阅 [此文档](https://slurm
 
 如果进程数没有占满 CPU 物理核心，则自动绑核无法工作， **必须手工指定** 上述参数。
 
-#### `numactl` 手工绑定
+#### `numactl` 手工绑定 {#numactl-manual-binding}
 
 如果 MPI 或者 SLURM 提供的参数无法满足需求，或者需要在多个环境下工作，就需要使用 `numactl` 进行手工的映射和绑定，重要的参数包括：
 
@@ -245,7 +245,7 @@ SLURM 的进程绑定分为三级，具体可以查阅 [此文档](https://slurm
 
     编写 wrapper script 时，一定需要注意 CPU 核心编号与 NUMA domain 的对应关系（以及与进程通信、访存逻辑的配合），错误的绑定会带来 **严重的性能下降** 。
 
-### OpenMP 程序
+### OpenMP 程序 {#openmp-program}
 
 同一进程内的所有 OpenMP 线程共享地址空间，因此容易受到 NUMA 效应的影响。尤其是访存密集的负载在线程数超过单个 NUMA domain 的核心数时，很可能产生性能下降。因此，线程数并非越多越好，编写程序时也需要考虑到此影响。
 
@@ -263,7 +263,7 @@ OpenMP 进程使用以下的方式控制线程的绑定：
 
 特别地，Intel 的 OpenMP 运行时也支持通过 `KMP_AFFINITY` 环境变量控制绑定（可见 [文档](https://www.intel.com/content/www/us/en/develop/documentation/cpp-compiler-developer-guide-and-reference/top/optimization-and-programming-guide/openmp-support/openmp-library-support/thread-affinity-interface-linux-and-windows.html)）。但这一行为并不在 OpenMP 标准中，因此也不受其他的实现支持。
 
-### MPI + OpenMP 混合程序
+### MPI + OpenMP 混合程序 {#mpi-openmp-hybrid-program}
 
 在使用 MPI + OpenMP 混合编程时，进程绑定对性能的影响尤为关键。每个 MPI 进程需要绑定在一组核心上（通常属于同一个 NUMA domain），并把它的 OpenMP 线程绑定在其中的每个核心上。如在 `conv` 集群上，使用 2 进程 $\times$ 14 线程的绑定方式为：
 
@@ -287,7 +287,7 @@ OpenMP 线程只能绑定于其“可见”的核心上，也就是父进程被�
 
     无论使用何种编程模型，除非有充分的理由和实验证据，并行单元的数量 **不要** 超过系统的物理核心数（oversubscribe）。
 
-### 程序主动绑定
+### 程序主动绑定 {#programmatic-binding}
 
 除了上述几种在运行时指定的绑定方式外，程序可以主动调用系统接口或第三方库控制自己的 CPU 绑定，例如：
 
@@ -297,7 +297,7 @@ OpenMP 线程只能绑定于其“可见”的核心上，也就是父进程被�
 
 在程序中直接控制绑定可以实现更丰富灵活的功能，也是某些情况下的唯一选择（如基于 `pthread` 的多线程程序）。但这些方法更容易与外部的绑定配置产生冲突，因此需要谨慎使用。
 
-## 调试工具
+## 调试工具 {#debugging-tools}
 
 * launcher 打印：
     * `srun --cpu-bind=verbose`
@@ -311,7 +311,7 @@ OpenMP 线程只能绑定于其“可见”的核心上，也就是父进程被�
 
 在 `conv` 集群上，可直接通过 `/home/course/hpc/tools/affinity-test` 运行 `affinity-test`。可以通过这一工具来测试上面各种方式的绑定结果，修改参数观察并对结果的影响，以获得更深的体会。
 
-## 参考资料
+## 参考资料 {#references}
 
 除上文中提及的文档外，还有一些可以参考的资料（不断更新）：
 
