@@ -40,7 +40,7 @@ nav:
   - 参考资料: reference.md
   - 常见问题: 
       # - FAQ: faq.md
-      - 进程绑定: binding.md
+      - 进程绑定: faq/binding.md
 
 
 extra_javascript:
