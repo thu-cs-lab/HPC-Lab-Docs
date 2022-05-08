@@ -39,7 +39,7 @@ nav:
   #   - 附加实验: exp/4.spmm.md
   - 参考资料: reference.md
   - 常见问题: 
-      - FAQ: faq.md
+      - FAQ: faq/index.md
       - 进程绑定: faq/binding.md
 
 
