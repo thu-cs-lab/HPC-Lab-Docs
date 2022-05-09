@@ -157,6 +157,8 @@ NUMA domain 越细分，则 NUMA 效应越不明显。通常， **只需关注 s
 
     进程绑定只能减低上述系统原因带来的性能影响，而不解决任何程序  **本身存在的问题**  ，尤其是负载不均衡导致的性能波动（甚至可能在绑核后变得更明显）。
 
+    此外，绑定仅仅指将进程/线程限制在指定的 CPU 核心上，但仍然可能有 **其他进程** 抢占这些资源（需要调整 Linux 调度器设置方可避免，可参见 [1](https://serverfault.com/questions/779383/how-to-prevent-a-particular-cpu-core-from-being-used)、[2](https://stackoverflow.com/questions/11111852/how-to-shield-a-cpu-from-the-linux-scheduler-prevent-it-scheduling-threads-onto)）。即使进程独占了一部分核心，**其他核心上的进程** 也可能对其性能产生影响（如抢占共享的 cache 或内存带宽）。
+
 ## 绑定方法
 
 ### MPI 程序
