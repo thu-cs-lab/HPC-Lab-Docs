@@ -36,7 +36,7 @@ nav:
   - 大作业:
     - 实验一: exp/1.odd_even_sort.md
     - 实验二: exp/2.stencil.md
-  #   - 实验三: exp/3.apsp.md
+    - 实验三: exp/3.apsp.md
   #   - 附加实验: exp/4.spmm.md
   - 参考资料: reference.md
   - 常见问题: 
