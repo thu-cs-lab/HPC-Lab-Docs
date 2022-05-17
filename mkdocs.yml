@@ -33,6 +33,7 @@ nav:
       - 小作业五: assignments/5.profiling_tools.md
       - 小作业六: assignments/6.cuda0.md
       - 小作业七: assignments/7.cuda1.md
+      - 小作业八: assignments/8.optimization0.md
   - 大作业:
     - 实验一: exp/1.odd_even_sort.md
     - 实验二: exp/2.stencil.md

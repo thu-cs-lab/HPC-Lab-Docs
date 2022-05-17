@@ -36,6 +36,7 @@
 * [小作业五](assignments/5.profiling_tools.md)：性能分析工具
 * [小作业六](assignments/6.cuda0.md)：CUDA 并行策略
 * [小作业七](assignments/7.cuda1.md)：CUDA 优化
+* [小作业八](assignments/8.optimization0.md)：单机性能优化
 
 ### 大作业
 
