@@ -1,7 +1,7 @@
 site_name: 高性能计算导论实验文档
 site_description: 'Documentation for Labs of Introduction to High Performance Computing'
 site_author: 'HPC Lab Developers'
-copyright: 'Copyright &copy; 2021-2022 Department of Computer Science and Technology, Tsinghua University. All Rights Reserved.'
+copyright: 'Copyright &copy; 2021-2023 Department of Computer Science and Technology, Tsinghua University. All Rights Reserved.'
 
 theme: 
   name: 'material'
@@ -26,19 +26,19 @@ nav:
   - 工具概述: tools.md
   - 小作业:
       - 小作业零: assignments/0.pow_a.md
-      - 小作业一: assignments/1.mpi_async.md
-      - 小作业二: assignments/2.mpi_allreduce.md
-      - 小作业三: assignments/3.omp_schedule.md
-      - 小作业四: assignments/4.simd.md
-      - 小作业五: assignments/5.profiling_tools.md
-      - 小作业六: assignments/6.cuda0.md
-      - 小作业七: assignments/7.cuda1.md
-      - 小作业八: assignments/8.optimization0.md
-  - 大作业:
-    - 实验一: exp/1.odd_even_sort.md
-    - 实验二: exp/2.stencil.md
-    - 实验三: exp/3.apsp.md
-    - 实验四: exp/4.spmm.md
+      # - 小作业一: assignments/1.mpi_async.md
+      # - 小作业二: assignments/2.mpi_allreduce.md
+      # - 小作业三: assignments/3.omp_schedule.md
+      # - 小作业四: assignments/4.simd.md
+      # - 小作业五: assignments/5.profiling_tools.md
+      # - 小作业六: assignments/6.cuda0.md
+      # - 小作业七: assignments/7.cuda1.md
+      # - 小作业八: assignments/8.optimization0.md
+  # - 大作业:
+    # - 实验一: exp/1.odd_even_sort.md
+    # - 实验二: exp/2.stencil.md
+    # - 实验三: exp/3.apsp.md
+    # - 实验四: exp/4.spmm.md
   - 参考资料: reference.md
   - 常见问题: 
       - FAQ: faq/index.md
