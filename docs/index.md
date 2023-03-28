@@ -31,8 +31,8 @@
 * [小作业零](assignments/0.pow_a.md)：熟悉环境配置、集群使用、作业提交
 * [小作业一](assignments/1.mpi_async.md)：MPI 非阻塞编程
 * [小作业二](assignments/2.mpi_allreduce.md)：MPI Allreduce
-<!--
 * [小作业三](assignments/3.omp_schedule.md)：OpenMP 调度策略
+<!--
 * [小作业四](assignments/4.simd.md)：向量化
 * [小作业五](assignments/5.profiling_tools.md)：性能分析工具
 * [小作业六](assignments/6.cuda0.md)：CUDA 并行策略
@@ -44,9 +44,10 @@
 
 大作业共占课程成绩的 $70\%$，将随课程进展逐步放出。
 
+* [实验一](exp/1.odd_even_sort.md)（奇偶排序，$15\%$）：基于消息传递的并行编程（MPI）
 <!--
 * [实验零](exp/0.pow_a.md)（pow_a，$5\%$）：熟悉环境配置、集群使用、作业提交
-* [实验一](exp/1.odd_even_sort.md)（奇偶排序，$15\%$）：基于消息传递的并行编程（MPI）
+
 * [实验二](exp/2.stencil.md)（模板计算，$20\%$）：基于共享内存模型和消息传递的并行编程（OpenMP, MPI）
 * [实验三](exp/3.apsp.md)（全源最短路，$20\%$）：CUDA 编程
 * [实验四](exp/4.spmm.md)（稀疏矩阵-矩阵乘，$20\%$）：高级 CUDA 编程
