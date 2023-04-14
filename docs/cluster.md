@@ -20,7 +20,7 @@
 * CPU: 2 $\times$ Intel(R) Xeon(R) CPU E5-2680 v4 @ 2.40GHz (14 Cores, turbo off)
 * Memory: 16 $\times$ 16 GB DDR4-2400
 * Network: 1000 Mbps Ethernet + 100 Gbps Infiniband EDR
-* GPU: 1 $\times$ NVIDIA GeForce GTX 1080 (`conv0`) / 1 $\times$ NVIDIA Tesla P100 (`conv[1-4]`)
+* GPU: 1 $\times$ NVIDIA GeForce GTX 1080 (`conv0`) / 1 $\times$ NVIDIA Tesla P100 (`conv[1-3]`)
 
 所有服务器都安装了 Debian 11 (bullseye) 操作系统，`conv0` 上共有 14TB 的存储，作为提供给同学的共享 home。注意 `conv0` 的 GPU 与实际计算节点不同，因此性能表现可能有较大差异。
 
@@ -118,6 +118,8 @@ srun -N 4 -n 8 --cpu-bind sockets ./test --args
 ```text
 srun: job 271 queued and waiting for resources
 ```
+
+集群根据硬件配置分为分为两个队列：`conv` 队列包含所有机器（默认使用），`gpu` 队列只包含有 GPU 的机器。在提交任务时，可使用 `srun -p name` 来指定队列。
 
 为了防止不同同学的进程互相干扰，实验集群的 SLURM 被配置为独占模式，即每个任务的 **最小分配粒度** 为单个节点。上述命令表示占用全部 4 个节点，共运行 8 个进程（每机 2 进程），并将每个进程绑定到一个 CPU socket（即一个 NUMA 节点）。通常来说，只需要关注 `-N` 和 `-n` 选项，用来控制进程数量；在一些负载上（尤其是 memory bound 程序），[进程绑定](faq/binding.md) 可能 **对性能有较大影响**，需要仔细调节。
 
