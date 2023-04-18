@@ -31,8 +31,8 @@ nav:
       - 小作业三: assignments/3.omp_schedule.md
       - 小作业四: assignments/4.cuda0.md
       - 小作业五: assignments/5.simd.md
+      - 小作业七: assignments/6.cuda1.md
       # - 小作业五: assignments/5.profiling_tools.md
-      # - 小作业七: assignments/7.cuda1.md
       # - 小作业八: assignments/8.optimization0.md
   - 大作业:
     - 实验一: exp/1.odd_even_sort.md
