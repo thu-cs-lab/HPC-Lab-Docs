@@ -113,15 +113,18 @@ source /opt/intel/oneapi/advisor/latest/env/vars.sh # 仅加载 advisor
 srun -N 4 -n 8 --cpu-bind sockets ./test --args
 ```
 
+上述命令表示占用全部 4 个节点，共运行 8 个进程（每机 2 进程），并将每个进程绑定到一个 CPU socket（即一个 NUMA 节点）。通常来说，只需要关注 `-N` 和 `-n` 选项，用来控制进程数量；在一些负载上（尤其是 memory bound 程序），[进程绑定](faq/binding.md) 可能 **对性能有较大影响**，需要仔细调节。
+
+为了提高作业运行效率，实验集群的 SLURM 默认工作在**非独占模式**下。如果需要独占节点，需要添加参数 ``--exclusive``，此时每个任务的 **最小分配粒度** 为单个节点。在助教测试时，所有的任务都会独占节点运行，以防互相干扰。
+
 由于机器数量有限，任务可能不会立刻被执行，此时 SLURM 会给出类似下面的提示，请耐心等待：
 
 ```text
 srun: job 271 queued and waiting for resources
 ```
 
-集群根据硬件配置分为分为两个队列：`conv` 队列包含所有机器（默认使用），`gpu` 队列只包含有 GPU 的机器。在提交任务时，可使用 `srun -p name` 来指定队列。
+集群只有一个名为 `conv` 的队列，默认不能使用 GPU。如果需要 GPU 则需要添加参数：`--gpus M`，其中 `M` 为总 GPU 数量。更详尽的用法请参见 [Generic Resource (GRES) Scheduling](https://slurm.schedmd.com/gres.html)。
 
-为了防止不同同学的进程互相干扰，实验集群的 SLURM 被配置为独占模式，即每个任务的 **最小分配粒度** 为单个节点。上述命令表示占用全部 4 个节点，共运行 8 个进程（每机 2 进程），并将每个进程绑定到一个 CPU socket（即一个 NUMA 节点）。通常来说，只需要关注 `-N` 和 `-n` 选项，用来控制进程数量；在一些负载上（尤其是 memory bound 程序），[进程绑定](faq/binding.md) 可能 **对性能有较大影响**，需要仔细调节。
 
 `sbatch` 用于提交一个非交互式的运行脚本，适用于时间较长的或多个任务的提交。本文档中不详细介绍这一命令的用法，有需要的同学可以查看 [此教程](http://hpc.pku.edu.cn/_book/guide/slurm/sbatch.html)。在此脚本中，需要显式地加载 Spack、使用 Spack 加载依赖软件后，方可正常执行程序。使用 `sbatch` 和 `srun` 提交的任务都可以用 `scancel` 命令进行取消或终止。
 
