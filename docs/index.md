@@ -84,8 +84,8 @@
 
 * 课程教师：翟季冬 zhaijidong@tsinghua.edu.cn
 * 本学期课程助教：
-    * 黄可钊：hkz20@mails.tsinghua.edu.cn（总协调）
-    * 陈晟祺：csq20@mails.tsinghua.edu.cn（实验集群）
+    * 翟明书：zhaims22@mails.tsinghua.edu.cn (总协调)
+    * 黄可钊：hkz20@mails.tsinghua.edu.cn（实验集群）
 * 课程建设：
     * 师天麾、王豪杰、金煜阳、唐适之、黄可钊、何家傲（课程实验）
     * 张晨、孙祯波、郑立言、马子轩（课程内容）
