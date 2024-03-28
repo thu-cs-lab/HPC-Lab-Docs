@@ -6,7 +6,7 @@
 
 完成该实验需要一定的 Make、SSH、Shell 和 Linux 的使用知识。同时，我们还推荐使用 Git 进行版本控制。如果你是大三或之后选的课程，那么你应该已经在《软件工程》《编译原理》《程序设计训练》等课程中学到了相应的知识。如果你是大一大二选的课程，可以参考以下的教程进行预习：
 
-* Git: [简明指南](https://rogerdudler.github.io/git-guide/index.zh.html)、[Git教程](https://www.liaoxuefeng.com/wiki/896043488029600) [缺失的一课](https://missing-semester-cn.github.io/2020/version-control/)、[助教编写的 Git 速查文档](https://thu-cs-lab.github.io/Orange-ECC/ecc/git/)、[Git Cheetsheet](https://education.github.com/git-cheat-sheet-education.pdf)
+* Git: [简明指南](https://rogerdudler.github.io/git-guide/index.zh.html)、[Git教程](https://www.liaoxuefeng.com/wiki/896043488029600) [缺失的一课](https://missing-semester-cn.github.io/2020/version-control/)、[助教编写的 Git 速查文档](https://thu-cs-lab.github.io/Orange-ECC/ecc/git/)、[Git Cheatsheet](https://education.github.com/git-cheat-sheet-education.pdf)
 * Make: 见[网原实验相关文档](https://lab.cs.tsinghua.edu.cn/router/doc/howto/make/)
 * Shell: [缺失的一课](https://missing-semester-cn.github.io/2020/command-line/)、[Command Line Cheatsheet](https://cheatography.com/davechild/cheat-sheets/linux-command-line/)
 * Linux: [USTC LUG Linux 101 在线讲义](https://101.lug.ustc.edu.cn/)
