@@ -32,7 +32,7 @@ nav:
       - 小作业四: assignments/4.cuda0.md
       - 小作业五: assignments/5.simd.md
       - 小作业六: assignments/6.cuda1.md
-      # - 小作业七: assignments/7.optimization0.md
+      - 小作业七: assignments/7.optimization0.md
       # - 小作业八: assignments/8.profiling_tools.md
       # - 小作业五: assignments/5.profiling_tools.md
   - 大作业:
