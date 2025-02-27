@@ -26,9 +26,9 @@
 
 ### 小作业
 
-小作业共占课程成绩的 $25\%$，内容为课程基本知识点练习，主要以报告的形式提交。
+小作业共占课程成绩的 $25\%$，内容为课程基本知识点练习，主要以报告的形式提交，将随课程进展逐步放出。
 
-* [小作业零](assignments/0.pow_a.md)：熟悉环境配置、集群使用、作业提交
+<!-- * [小作业零](assignments/0.pow_a.md)：熟悉环境配置、集群使用、作业提交
 * [小作业一](assignments/1.mpi_async.md)：MPI 非阻塞编程
 * [小作业二](assignments/2.mpi_allreduce.md)：MPI Allreduce
 * [小作业三](assignments/3.omp_schedule.md)：OpenMP 调度策略
@@ -36,15 +36,15 @@
 * [小作业五](assignments/5.simd.md)：向量化
 * [小作业六](assignments/6.cuda1.md)：CUDA 优化
 * [小作业七](assignments/7.optimization0.md)：单机性能优化
-* [小作业八](assignments/8.profiling_tools.md)：性能分析工具
+* [小作业八](assignments/8.profiling_tools.md)：性能分析工具 -->
 
 ### 大作业
 
 大作业共占课程成绩的 $70\%$，将随课程进展逐步放出。
 
-* [实验一](exp/1.odd_even_sort.md)（奇偶排序，$20\%$）：基于消息传递的并行编程（MPI）
+<!-- * [实验一](exp/1.odd_even_sort.md)（奇偶排序，$20\%$）：基于消息传递的并行编程（MPI）
 * [实验二](exp/2.apsp.md)（全源最短路，$20\%$）：CUDA 编程
-* [实验三](exp/3.spmm.md)（稀疏矩阵-矩阵乘，$30\%$）：CUDA 编程
+* [实验三](exp/3.spmm.md)（稀疏矩阵-矩阵乘，$30\%$）：CUDA 编程 -->
 <!--
 * [实验零](exp/0.pow_a.md)（pow_a，$5\%$）：熟悉环境配置、集群使用、作业提交
 
@@ -85,7 +85,7 @@
 * 课程教师：翟季冬 zhaijidong@tsinghua.edu.cn
 * 本学期课程助教：
     * 翟明书：zhaims22@mails.tsinghua.edu.cn (总协调)
-    * 黄可钊：hkz20@mails.tsinghua.edu.cn（实验集群）
+    * 张闰清：zhangrq24@mails.tsinghua.edu.cn（实验集群）
 * 课程建设：
     * 陈晟祺（实验环境）
     * 师天麾、王豪杰、金煜阳、唐适之、黄可钊、何家傲（课程实验）
