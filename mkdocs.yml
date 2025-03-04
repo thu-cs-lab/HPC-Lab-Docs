@@ -1,7 +1,7 @@
 site_name: 高性能计算导论实验文档
 site_description: 'Documentation for Labs of Introduction to High Performance Computing'
 site_author: 'HPC Lab Developers'
-copyright: 'Copyright &copy; 2021-2024 Department of Computer Science and Technology, Tsinghua University. All Rights Reserved.'
+copyright: 'Copyright &copy; 2021-2025 Department of Computer Science and Technology, Tsinghua University. All Rights Reserved.'
 
 theme: 
   name: 'material'
@@ -24,8 +24,8 @@ nav:
   - 总述: index.md
   - 集群使用: cluster.md
   - 工具概述: tools.md
-#  - 小作业:
-#      - 小作业零: assignments/0.pow_a.md
+  - 小作业:
+     - 小作业零: assignments/0.pow_a.md
 #      - 小作业一: assignments/1.mpi_async.md
 #      - 小作业二: assignments/2.mpi_allreduce.md
 #      - 小作业三: assignments/3.omp_schedule.md
