@@ -26,7 +26,7 @@ nav:
   - 工具概述: tools.md
   - 小作业:
      - 小作业零: assignments/0.pow_a.md
-#      - 小作业一: assignments/1.mpi_async.md
+     - 小作业一: assignments/1.mpi_async.md
 #      - 小作业二: assignments/2.mpi_allreduce.md
 #      - 小作业三: assignments/3.omp_schedule.md
 #      - 小作业四: assignments/4.cuda0.md
