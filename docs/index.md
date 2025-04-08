@@ -33,8 +33,8 @@
 * [小作业二](assignments/2.mpi_allreduce.md)：MPI Allreduce
 * [小作业三](assignments/3.omp_schedule.md)：OpenMP 调度策略
 * [小作业四](assignments/4.cuda0.md)：CUDA 并行策略
-<!-- * [小作业五](assignments/5.simd.md)：向量化
-* [小作业六](assignments/6.cuda1.md)：CUDA 优化
+* [小作业五](assignments/5.simd.md)：向量化
+<!-- * [小作业六](assignments/6.cuda1.md)：CUDA 优化
 * [小作业七](assignments/7.optimization0.md)：单机性能优化
 * [小作业八](assignments/8.profiling_tools.md)：性能分析工具 -->
 
