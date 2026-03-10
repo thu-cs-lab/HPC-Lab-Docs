@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "hpc-lab-docs"
+version = "0.1.0"
+description = "MkDocs-based documentation site for the HPC Lab course"
+authors = ["Introduction to HPC Teaching Team, Department of Computer Science and Technology, Tsinghua University"]
+package-mode = false
+
+[tool.poetry.dependencies]
+python = ">=3.10,<4.0"
+mkdocs = "1.5.3"
+mkdocs-material = "9.4.7"
+mkdocs-git-revision-date-localized-plugin = "1.2.1"
+mkdocs-git-authors-plugin = "0.7.2"
+nltk = ">=3.7"
+Jinja2 = ">=3"
+
+[build-system]
+requires = ["poetry-core>=1.8.0"]
+build-backend = "poetry.core.masonry.api"
