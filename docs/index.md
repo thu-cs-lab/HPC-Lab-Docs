@@ -29,8 +29,8 @@
 小作业共占课程成绩的 $25\%$，内容为课程基本知识点练习，主要以报告的形式提交，将随课程进展逐步放出。
 
 * [小作业零](assignments/0.pow_a.md)：熟悉环境配置、集群使用、作业提交
-<!-- * [小作业一](assignments/1.mpi_async.md)：MPI 非阻塞编程
-* [小作业二](assignments/2.mpi_allreduce.md)：MPI Allreduce
+* [小作业一](assignments/1.mpi_async.md)：MPI 非阻塞编程
+<!-- * [小作业二](assignments/2.mpi_allreduce.md)：MPI Allreduce
 * [小作业三](assignments/3.omp_schedule.md)：OpenMP 调度策略
 * [小作业四](assignments/4.cuda0.md)：CUDA 并行策略
 * [小作业五](assignments/5.simd.md)：向量化
